@@ -4,6 +4,7 @@
 #include "Player/AuraPlayerController.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Intercation/EnemyInterface.h"
 
 
 AAuraPlayerController::AAuraPlayerController()
@@ -39,6 +40,46 @@ void AAuraPlayerController::SetupInputComponent()
 	EnhancedInputComponent->BindAction(MoveAction,ETriggerEvent::Triggered,this,&AAuraPlayerController::Move);
 }
 
+void AAuraPlayerController::PlayerTick(float DeltaTime)
+{
+	Super::PlayerTick(DeltaTime);
+
+	CusorTrace();
+}
+
+void AAuraPlayerController::CusorTrace()
+{
+	FHitResult CursorHit;
+	GetHitResultUnderCursor(ECC_Visibility,false,CursorHit);
+	if(!CursorHit.bBlockingHit)return;
+	
+	LastActor = ThisActor;
+	ThisActor=Cast<IEnemyInterface>(CursorHit.GetActor());
+
+	if (LastActor == nullptr)
+	{
+		if (ThisActor!=nullptr)
+		{
+			//当前帧指针下接口的突出显示
+			ThisActor->HighLightAction();
+		}
+	}
+	else
+	{
+		//上一帧取消突出显示
+		if (ThisActor == nullptr){LastActor->UnHighLightAction();}
+		else
+		{
+			if (LastActor!=ThisActor)
+			{
+				//上一帧的接口取消突出显示，当前帧的接口突出显示
+				LastActor->UnHighLightAction();
+				ThisActor->HighLightAction();
+			}
+		}
+	}
+}
+
 void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 {
 	const FVector2D InputAxisVector =InputActionValue.Get<FVector2D>();
@@ -55,4 +96,6 @@ void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 	}
 	
 }
+
+
 
