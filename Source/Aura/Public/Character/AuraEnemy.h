@@ -19,6 +19,7 @@ public:
 	
 	void HighLightAction() override;
 	void UnHighLightAction() override;
-
+protected:
+	virtual void BeginPlay() override;
 	
 };
