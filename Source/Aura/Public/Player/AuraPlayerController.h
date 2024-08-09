@@ -33,6 +33,6 @@ private:
 	void Move(const struct FInputActionValue& InputActionValue);
 
 	void CusorTrace();
-	IEnemyInterface* LastActor;//上一帧的指针接口
-	IEnemyInterface* ThisActor;//当前帧的指针接口
+	TObjectPtr<IEnemyInterface> LastActor;//上一帧的指针接口
+	TObjectPtr<IEnemyInterface> ThisActor;//当前帧的指针接口
 };

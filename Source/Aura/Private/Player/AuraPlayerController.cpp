@@ -19,8 +19,10 @@ void AAuraPlayerController::BeginPlay()
 	check(AuraContext);
 	
 	UEnhancedInputLocalPlayerSubsystem* Subsystem=ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
-	check(Subsystem);
-	Subsystem->AddMappingContext(AuraContext,0);//存在多个操作映射，设置AuraContext为优先触发
+	if (true)
+	{
+		Subsystem->AddMappingContext(AuraContext,0);//存在多个操作映射，设置AuraContext为优先触发
+	}
 	
 	bShowMouseCursor= true;//显示鼠标
 	DefaultMouseCursor =EMouseCursor::Default;//默认鼠标光标样式
