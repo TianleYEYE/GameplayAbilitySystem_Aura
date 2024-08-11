@@ -19,7 +19,7 @@ void AAuraPlayerController::BeginPlay()
 	check(AuraContext);
 	
 	UEnhancedInputLocalPlayerSubsystem* Subsystem=ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
-	if (true)
+	if (Subsystem)
 	{
 		Subsystem->AddMappingContext(AuraContext,0);//存在多个操作映射，设置AuraContext为优先触发
 	}
