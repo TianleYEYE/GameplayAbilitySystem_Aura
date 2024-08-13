@@ -19,13 +19,18 @@ void AAuraEffectActor::BeginPlay()
 
 void AAuraEffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGameplayEffect> GameplayEffectClass)
 {
+	//获取接触到道具角色的ASC
 	UAbilitySystemComponent *TargetASC=UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
 	if(TargetASC == nullptr)return;
 
 	check(GameplayEffectClass);
+	//创建Effect句柄，并且包含接触道具角色的效果实例的数据
 	FGameplayEffectContextHandle EffectContextHandle =TargetASC->MakeEffectContext();
+	//设置创建Effect的对象，施加效果的对象，这里指自身，自身为施加效果的施加方
 	EffectContextHandle.AddSourceObject(this);
+	//FGameplayEffectSpecHandle封装了实际的 FGameplayEffectSpec,MakeOutgoingSpec将GameEffectClass实例化为FGameplayEffectSpecHandle
 	const FGameplayEffectSpecHandle EffectSpecHandle = TargetASC->MakeOutgoingSpec(GameplayEffectClass,1.f,EffectContextHandle);
+	//FActiveGameplayEffectHandle用于跟踪和管理已经应用到目标上的Effect,
     const FActiveGameplayEffectHandle ActiveEffectHandle =TargetASC->ApplyGameplayEffectSpecToSelf(*EffectSpecHandle.Data.Get());
 
 	const bool bIsInfinte = EffectSpecHandle.Data.Get()->Def.Get()->DurationPolicy == EGameplayEffectDurationType::Infinite;
