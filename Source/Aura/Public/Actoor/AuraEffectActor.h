@@ -70,6 +70,9 @@ protected:
 
 	UPROPERTY(EditAnywhere,BlueprintReadOnly,Category="Applied Effects")
 	EEffectRemovalPolicy InfiniteEffecRemovePolicy =EEffectRemovalPolicy::RemoveOnEndOverlap;
+
+	UPROPERTY(EditAnywhere,BlueprintReadOnly,Category="Applied Effects")
+	float ActorLevel = 1;
     
 	TMap<FActiveGameplayEffectHandle, UAbilitySystemComponent*> ActiveEffectHandles;
 

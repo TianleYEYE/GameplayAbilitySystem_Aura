@@ -13,8 +13,9 @@
 		GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName) \
 		GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
 
+
 USTRUCT()
-struct AURA_API FEffectProperties
+struct FEffectProperties
 {
 	GENERATED_BODY()
 	
