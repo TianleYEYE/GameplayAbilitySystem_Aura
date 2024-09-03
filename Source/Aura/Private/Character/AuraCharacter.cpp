@@ -5,6 +5,7 @@
 
 #include "Game/AuraPlayerState.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "Player/AuraPlayerController.h"
 #include "UI/HUD/AuraHUD.h"
 
@@ -34,7 +35,6 @@ void AAuraCharacter::OnRep_PlayerState()
 	Super::OnRep_PlayerState();
 	//初始化能力信息到客户端
 	InitAbilityActorInfo();
-
 	
 }
 
@@ -42,8 +42,20 @@ void AAuraCharacter::InitAbilityActorInfo()
 {
 	AAuraPlayerState *AuraPlayerState=GetPlayerState<AAuraPlayerState>();
 	check(AuraPlayerState);
-	AuraPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(AuraPlayerState,this);
 	AbilitySystemComponent =AuraPlayerState->GetAbilitySystemComponent();
+	AbilitySystemComponent->InitAbilityActorInfo(AuraPlayerState,this);
+	
+	 
+	if (AbilitySystemComponent)
+	{
+		GEngine->AddOnScreenDebugMessage(1,8.f,FColor::Blue,AbilitySystemComponent.GetPathName());
+		Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInfoSet();
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Failed to cast to UAuraAbilitySystemComponent"));
+	}
+	
 	AttributesSet =AuraPlayerState->GetAttributeSet();
 
 	if (AAuraPlayerController *AuraPlayerController=Cast<AAuraPlayerController>(GetController()))
@@ -53,5 +65,4 @@ void AAuraCharacter::InitAbilityActorInfo()
 			AuraHUD->InitOverlay(AuraPlayerController,AuraPlayerState,AbilitySystemComponent,AttributesSet);
 		}
 	}
-	
 }
