@@ -44,17 +44,7 @@ void AAuraCharacter::InitAbilityActorInfo()
 	check(AuraPlayerState);
 	AbilitySystemComponent =AuraPlayerState->GetAbilitySystemComponent();
 	AbilitySystemComponent->InitAbilityActorInfo(AuraPlayerState,this);
-	
-	 
-	if (AbilitySystemComponent)
-	{
-		GEngine->AddOnScreenDebugMessage(1,8.f,FColor::Blue,AbilitySystemComponent.GetPathName());
-		Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInfoSet();
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Failed to cast to UAuraAbilitySystemComponent"));
-	}
+	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInfoSet();
 	
 	AttributesSet =AuraPlayerState->GetAttributeSet();
 
