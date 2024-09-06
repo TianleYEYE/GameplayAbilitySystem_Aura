@@ -22,7 +22,6 @@ void AAuraEnemy::HighLightAction()
 
 	Weapon->SetRenderCustomDepth(true);
 	Weapon->SetCustomDepthStencilValue(CUSTOM_DEPTH_RED);
-	
 }
 
 void AAuraEnemy::UnHighLightAction()
