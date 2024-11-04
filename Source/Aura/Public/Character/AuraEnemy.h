@@ -22,5 +22,7 @@ public:
 protected:
 	virtual void BeginPlay() override;
 	virtual void InitAbilityActorInfo()override;
-	
+
+	UPROPERTY(EditAnywhere,BlueprintReadOnly,Category= "Character Class Default")
+	int Level = 1;
 };
