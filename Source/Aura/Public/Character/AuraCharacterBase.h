@@ -6,6 +6,7 @@
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "AbilitySystemInterface.h"
 #include "GameFramework/Character.h"
+#include "Intercation/CombatInterface.h"
 #include "AuraCharacterBase.generated.h"
 
 class UAbilitySystemComponent;
@@ -13,7 +14,7 @@ class UAttributeSet;
 class GameplayEffect;
 
 UCLASS(Abstract)
-class AURA_API AAuraCharacterBase : public ACharacter,public IAbilitySystemInterface
+class AURA_API AAuraCharacterBase : public ACharacter,public IAbilitySystemInterface,public ICombatInterface
 {
 	GENERATED_BODY()
 
@@ -41,8 +42,10 @@ protected:
 	TSubclassOf<UGameplayEffect>DefaultPrimaryAttributes;
 	UPROPERTY(BlueprintReadOnly,EditAnywhere,Category = "Attribute")
 	TSubclassOf<UGameplayEffect>DefaultSecondaryAttributes;
-
-	void ApplyEffectToTarget(TSubclassOf<UGameplayEffect> GameplayEffectClasss ,float Level);
+	UPROPERTY(BlueprintReadOnly,EditAnywhere,Category = "Attribute")
+	TSubclassOf<UGameplayEffect>DefaultVitalAttributes;
+	
+	void ApplyEffectToSelf(TSubclassOf<UGameplayEffect> GameplayEffectClasss ,float Level);
 
 	void InilitialzeDefaultAttributes();
 };
